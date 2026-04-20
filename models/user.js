@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const uniSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -9,7 +9,8 @@ const uniSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true // Each user must have a unique email address
+        unique: true, // Each user must have a unique email address
+        match: [/.+\@.+\..+/,"Please use a valid email address"]
     },
 
     password: {
@@ -22,7 +23,8 @@ const uniSchema = new mongoose.Schema({
         ref: "University",
         required: true
     }
-});
+}, {timestamps: true}); // Automatically add createdAt and updatedAt fields to the user documents
+
 
 export default mongoose.model("User", userSchema);
 
