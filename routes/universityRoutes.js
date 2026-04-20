@@ -1,11 +1,9 @@
 import express from 'express';
-import { createUniversity } from '../controllers/universityControllers';
+import { createUniversity, getUniversities } from '../controllers/universityController.js';
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-    res.send("UNIVERSITY ROUTE IS WORKING"); 
-});
+router.get("/", getUniversities); // Define a GET route for retrieving all universities, which will call the getUniversities controller function when accessed.
 
 router.post("/", createUniversity); // Define a POST route for creating a new university, 
 // which will call the createUniversity controller function when accessed.
