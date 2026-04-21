@@ -31,7 +31,7 @@ const listingSchema = new mongoose.Schema( // Define the schema for a listing , 
 
         imageUrl: {
             type: String,
-            default: ""
+            default: "" // If user dont send an image URL, default will be string empty
         },
 
         contactInfo: {
