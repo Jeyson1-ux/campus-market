@@ -118,3 +118,4 @@ export const deleteListing = async (req, res) => {
         res.status(500).json({ message: "Failed to delete the listing"});
     }
 };
+
