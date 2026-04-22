@@ -26,7 +26,7 @@ const listingSchema = new mongoose.Schema( // Define the schema for a listing , 
         type: {
             type: String,
             required: true,
-            enum: ["Sell", "Lend"] // Define allowed values for type
+            enum: ["sell", "lend"] // Define allowed values for type
         },
 
         imageUrl: {

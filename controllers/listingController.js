@@ -1,4 +1,6 @@
 import Listing from "../models/listing.js"; // Import the listing model
+import "../models/university.js"; // Import the university model to populate the universityId field in the listing
+import "../models/user.js"; // Import the user model to populate the userId field in the listing
 
 // To create a new listing
 
