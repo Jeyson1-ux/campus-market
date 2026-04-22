@@ -121,3 +121,25 @@ export const deleteListing = async (req, res) => {
     }
 };
 
+export const getListingStats = async (req, res) => {
+    try {
+        const totalListings = await Listing.countDocuments(); //countdocuments = count the total number of documents in the Listing collection
+
+        const avgPriceResult = await Listing.aggregate([ //aggregate = mongodb sätt att göra beräkningar, 
+            //ta alla listing och räkna ut medelvärdet på price componenten
+            {
+                $group: {
+                    _id: null,
+                    averagePrice: { $avg: "$price"}
+                }
+            }
+        ]);
+
+        res.status(200).json({
+            totalListings, 
+            averagePrice: avgPriceResult[0]?.averagePrice || 0
+        });
+    } catch (err) {
+        return res.status(500).json({message: err.message});
+    }
+};
