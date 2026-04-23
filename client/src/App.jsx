@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from "axios";
-import { useEffect } from 'react';
+import ListingTable from './components/ListingTable';
+import "./App.css";
+import StatsBar from './components/Statsbar';
 
 const API_URL = "http://localhost:5000/api";
 
@@ -31,23 +33,19 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className='app'>
       <h1>Campus Market</h1>
-      {/* If loading is true, show this */}
+      <p className='subtitle'>Buy, sell, and lend within your own unviersity</p>
+
       {loading && <p> Loading...</p>}
       {/* Om error innehåller text visas detta */}
-      {error && <p>{error}</p>}
+      {error && <p className='error-text'>{error}</p>}
+
 
       {/* Loop thorugh all the listings if the site is no longer loading */}
-      {!loading &&
-        listings.map((listing) => (
-          <div key={listing._id}>
-            <h3>{listing.title}</h3>
-            <p>{listing.price} SEK</p>
-          </div>
-        ))}
-      </div>
+      {!loading && !error && <ListingTable listings={listings} />}
+    </div>
   );
 }
 
-export default App
+export default App;
