@@ -1,6 +1,6 @@
 import ListingRow from "./ListingRow";
 
-function ListingTable({ listings }) {
+function ListingTable({ listings, onEdit, onDelete }) {
     return (
         <div className="table-wrap">
             <table>
@@ -12,16 +12,17 @@ function ListingTable({ listings }) {
                         <th>Type</th>
                         <th>University</th>
                         <th>Contact</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {listings.length === 0 ? (
                         <tr>
-                            <td colSpan="6">No listings were found</td>
+                            <td colSpan="7">No listings were found</td>
                         </tr>
                     ) : (
                         listings.map((listing) => (
-                            <ListingRow key={listing._id} listing={listing} />
+                            <ListingRow key={listing._id} listing={listing} onEdit={onEdit} onDelete={onDelete} />
 
                         ))
                     )}

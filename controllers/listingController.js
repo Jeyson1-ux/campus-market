@@ -18,7 +18,7 @@ export const getListings = async (req,res) => {
 
         const listings = await Listing.find(filter) // Find listings in the database that match the filter criteria
             .populate("userId", "name email")
-            .populate("universityId", "name") // Populate the userId and universityId fields with the corresponding data from the User and University collections
+            .populate("universityId", "name code") // Populate the userId and universityId fields with the corresponding data from the User and University collections
         
         res.status(200).json(listings) // Send the found listings as a JSON response with a 200 status code-
     } catch (err) {
