@@ -102,9 +102,13 @@ function App() {
   }
 
   //Filter
-  const filteredListings = listings.filter((listing) => 
-    listing.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredListings = listings.filter((listing) => {
+    const matchesSearch = listing.title.toLowerCase().includes(search.toLowerCase()) // kollar om title matchar sökfältet
+    const matchesUniversity = listing.universityId?.code === selectedUniversity; // annonsen tillhör till vilket lärosäte
+
+    return matchesSearch & matchesUniversity;
+  });
+  
 
   return (
     <div className='app'>
