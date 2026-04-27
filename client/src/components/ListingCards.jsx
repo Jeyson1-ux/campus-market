@@ -12,11 +12,13 @@ function ListingCards({ listings, onEdit, onDelete}) {
                     listings.map((listings) => (
                         <article className="card-listing" key={listings._id}> 
                             {listings.imageUrl && (
-                                <img
-                                    className="listing-image"
-                                    src={listings.imageUrl}
-                                    alt={listings.title}
-                                />
+                                <div className="listing-image-wrap">
+                                    <img
+                                        className="listing-image"
+                                        src={listings.imageUrl}
+                                        alt={listings.title}
+                                    />
+                                </div>
                             )};
 
                             <div className="card-badge">{listings.type}</div>
