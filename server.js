@@ -9,8 +9,8 @@ dotenv.config();
 const app = express();
 
 app.use(cors());
-app.use(express.json()); // Middleware to parse JSON bodies from incoming requests
-
+app.use(express.json({limit: "10mb"})); // Middleware to parse JSON bodies from incoming requests
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use("/api/listings", listingRoutes); // Use the listing routes for any requests to /api/listings
 
 app.use("/api/universities", universityRoutes); // Use the university routes for any requests to /api/universities

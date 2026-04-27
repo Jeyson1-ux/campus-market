@@ -47,19 +47,32 @@ h1 {
 }
 
 .upload-button {
-  display: inline-block;
-  padding: 0.8rem;
+  width: fit-content;
+  padding: 0.8rem 1.4rem;
   border-radius: 12px;
   background: linear-gradient(135deg, #f0c041,#a97700);
   cursor: pointer;
   text-align: center;
   font-weight: bold;
   color:#000;
+  justify-self: center;
 
 }
 
 .upload-button:hover {
   transform: translateY(-3px);
+}
+
+.image-preview {
+  grid-column: 1 / -1;
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  justify-self: center;
+  border-radius: 12px;
+  border: 1px solid #ba8b08;
+  background: #111;
+  padding: 0.5rem;
 }
 
 .university-section {
@@ -183,22 +196,29 @@ h1 {
 }
 
 .listing-image {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
+  display: block;
+  max-width: 90%;
+  height: 90%;
+  object-fit: contain;
+  border:none;
+  background: transparent;
   border-radius: 11px;
-  margin-bottom: 1.1rem;
+  margin: 0;
   border: 1px solid #b78807;
 }
 
 .listing-image-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 190px;
+  height: 220px;
   overflow: hidden; 
   border-radius: 14px;
   border: 1px solid #ba8b08;
-  margin-bottom: 1rem;
+  margin: 0 0 1.2rem 0;
   background: #111;
+  margin: 1.5rem 0;
 }
 
 .form-buttons {
@@ -226,8 +246,9 @@ h1 {
 
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
   gap: 2rem;
+  justify-content: center;
 }
 
 .card-listing {
@@ -239,6 +260,7 @@ h1 {
   box-shadow: 0 14px 35px rgba(0, 0, 0, 0.45);
   transition: transform 0.2s ease, border-color 0.2s ease;
   backdrop-filter: blur(6px);
+  margin-top: 0.8rem;
 }
 
 .card-listing:hover {
@@ -260,6 +282,7 @@ h1 {
   font-weight: 700;
   text-transform: uppercase;
   font-size: 0.75rem;
+  margin-top: 0.5rem;
 }
 
 .card-description {
