@@ -101,7 +101,7 @@ export const updateListing = async (req, res) => {
 
         res.status(200).json(updatedListing); //201 = Created, 200 = OK
     } catch (err) {
-        res.status(500).json({ message: "Failed to update the listing"});
+        res.status(500).json({ message: err.message});
     }
 };
 

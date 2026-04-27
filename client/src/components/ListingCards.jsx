@@ -1,5 +1,3 @@
-import ListingForm from "./ListingForm";
-
 function ListingCards({ listings, onEdit, onDelete}) {
     return (
         <section className="card-section">
@@ -19,7 +17,7 @@ function ListingCards({ listings, onEdit, onDelete}) {
                                         alt={listings.title}
                                     />
                                 </div>
-                            )};
+                            )}
 
                             <div className="card-badge">{listings.type}</div>
                             <h3>{listings.title}</h3>

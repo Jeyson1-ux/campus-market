@@ -9,7 +9,7 @@ function ListingForm({ onSubmit, editingListing, clearEditing }) {
         type: "sell",
         imageUrl: "",
         contactInfo: "",
-        userId: "69e88ae6f70f51613dfcf7fa",
+        userId: "69e89c3e4ed9badcbfa23f91",
         universityId: "69e88a19f70f51613dfcf7f5"
     };
 
@@ -105,9 +105,9 @@ function ListingForm({ onSubmit, editingListing, clearEditing }) {
 
             {formData.imageUrl && (
                 <img
+                    className="image-preview"
                     src={formData.imageUrl}
                     alt="preview"
-                    style={{ width: "100%", marginTop:"10px", borderRadius: "10px"}}
                 />
             )}
 

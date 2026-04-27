@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axios from "axios";
 import ListingTable from './components/ListingTable';
 import ListingForm from './components/ListingForm';
@@ -12,7 +12,9 @@ import mauLogo from "./assets/universities/mau.webp";
 import stockholmLogo from "./assets/universities/Stockholm.webp";
 import linkopingLogo from "./assets/universities/Linköpings.webp";
 import UniversitySelector from "./components/UniversitySelector";
+
 const API_URL = "http://localhost:5000/api";
+const DEFAULT_USER_ID = "69e89c3e4ed9badcbfa23f91";
 
 function App() {
   const [listings, setListings] = useState([]);
@@ -23,6 +25,7 @@ function App() {
   const [editinglisting, setEditingListing] = useState(null);
   const [search, setSearch] = useState("");
   const [selectedUniversity, setSelectedUniversity] = useState("HKR");
+  const formRef = useRef(null);
 
   const fetchListings = async () => {
     try {
@@ -101,6 +104,7 @@ function App() {
       }
       const finalData = {
         ...FormData,
+        userId:FormData.userId?._id || DEFAULT_USER_ID,
         universityId: selectedUniversityObject.id
       };
 
@@ -115,10 +119,21 @@ function App() {
       fetchListings();
       setError(""); // rensa fel
     } catch (err) {
-      setError("Failed to save listing");
+      console.log(err.response?.data);
+      setError(err.response?.data?.message || "Failed to save listing");
     }
   };
 
+  const handleEdit = (listing) => {
+  setEditingListing(listing);
+
+  setTimeout(() => {
+    formRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }, 100);
+};
   const handleDelete = async (id) => {
     const confirmed = window.confirm("Are you sure you wanna delete this listing?");
     if (!confirmed) return; // avbryt operationen om nej
@@ -166,13 +181,14 @@ function App() {
         value={search}
         onChange={(e) => setSearch(e.target.value)} 
       />
-      
-      <ListingForm
-        onSubmit={handleCreateOrUpdate} //Tar hand om update och delete
-        editingListing={editinglisting}// Skickar edit-data
-        clearEditing={() => setEditingListing(null)} //cancel edit
-      />
-      
+      <div ref={formRef}>
+        <ListingForm
+          onSubmit={handleCreateOrUpdate} //Tar hand om update och delete
+          editingListing={editinglisting}// Skickar edit-data
+          clearEditing={() => setEditingListing(null)} //cancel edit
+        />
+      </div>
+        
       {loading && <p> Loading...</p>}
       {/* Om error innehåller text visas detta */}
       {error && <p className='error-text'>{error}</p>}
@@ -180,7 +196,7 @@ function App() {
        {!loading && !error && (
         <ListingCards 
           listings={filteredListings}
-          onEdit={setEditingListing}
+          onEdit={handleEdit}
           onDelete={handleDelete} 
         />
       )}
