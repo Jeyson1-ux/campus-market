@@ -1,68 +1,80 @@
 import { useEffect, useState } from "react";
-import university from "../../../models/university";
 
-function ListingForm({onSubmit, editingListing, clearEditing}) {
-    const [formData, setFormData] = useState ({
+function ListingForm({ onSubmit, editingListing, clearEditing }) {
+    const emptyForm = {
         title: "",
         description: "",
         price: "",
-        condition: "Good", // default
-        type:"sell",
+        condition: "Good",
+        type: "sell",
         imageUrl: "",
-        contactInfo:"info@example.com",
-        userID: "69e88ae6f70f51613dfcf7fa",
-        universityID: "69e88a19f70f51613dfcf7f5"
-    });
+        contactInfo: "",
+        userId: "69e88ae6f70f51613dfcf7fa",
+        universityId: "69e88a19f70f51613dfcf7f5"
+    };
+
+    const [formData, setFormData] = useState(emptyForm);
 
     useEffect(() => {
-        if (editingListing) { //Runs when editinglistings changes
+        if (editingListing) {
             setFormData({
-                title:editingListing.title || "",
-                description:editingListing.description || "",
-                price:editingListing.price || "",
-                condition:editingListing.condition || "Good",
-                type:editingListing.type || "sell",
-                imageUrl:editingListing.imageUrl || "",
-                contactInfo:editingListing.contactInfo || "",
-                userID:editingListing.userID._id || editingListing.userID,
-                universityID: editingListing.universityID._id || editingListing.universityID
+                title: editingListing.title || "",
+                description: editingListing.description || "",
+                price: editingListing.price || "",
+                condition: editingListing.condition || "Good",
+                type: editingListing.type || "sell",
+                imageUrl: editingListing.imageUrl || "",
+                contactInfo: editingListing.contactInfo || "",
+                userId: editingListing.userId?._id || editingListing.userId,
+                universityId: editingListing.universityId?._id || editingListing.universityId
             });
         }
     }, [editingListing]);
 
-    const changeHandler = (e) => { //Denna körs när användare ändrar ett fält
-        const { name, value } = e.target; // Tar ut namn och värde från inputfältet
+    const changeHandler = (e) => {
+        const { name, value } = e.target;
 
-        setFormData((prev) => ({ 
+        setFormData((prev) => ({
             ...prev,
-            [name]: name === "price" ? Number(value) : value //price ska göras om till ett nummer annars behåll som en sträng
-        }))
+            [name]: value
+        }));
+    };
+
+    const imageHandler = (e) => {
+        const file = e.target.files[0];
+
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setFormData((prev) => ({
+                ...prev,
+                imageUrl: reader.result
+            }));
+        };
+
+        reader.readAsDataURL(file);
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault(); // Undvika vanlig sidoomladdning
-        onSubmit(formData) // skickar formulärdatan till app-komponeneten
+        e.preventDefault();
 
-        setFormData({ // Här så återställer vi alla fält efter att föregående fält skickats 
-            title: "",
-            description: "",
-            price: "",
-            condition: "Good", // default
-            type:"sell",
-            imageUrl: "",
-            contactInfo:"info@example.com",
-            userID: "69e88ae6f70f51613dfcf7fa",
-            universityID: "69e88a19f70f51613dfcf7f5"
+        onSubmit({
+            ...formData,
+            price:Number(formData.price) // Converts price to number before sending to backend
         });
+
+        setFormData(emptyForm);
     };
 
     return (
-        <form className="listing-form" onSubmit={handleSubmit}> {/* formulär med submit funktion */}
-            <h2>{editingListing ? "Edit Listing": "Create Listing"}</h2> {/* Olika title beroend på mode*/}
+        <form className="listing-form" onSubmit={handleSubmit}>
+            <h2>{editingListing ? "Edit Listing" : "Create Listing"}</h2>
 
-            <input name="title" placeholder="Title" value={formData.title} onChange={changeHandler} required/>
-            <input name="description" placeholder="Description" value={formData.description} onChange={changeHandler} required/>
-            <input name="price" placeholder="Price" value={formData.price} onChange={changeHandler} required/>
+            <input name="title" placeholder="Title" value={formData.title} onChange={changeHandler} required />
+            <input name="description" placeholder="Description" value={formData.description} onChange={changeHandler} required />
+            <input name="price" type="number" placeholder="Price" value={formData.price} onChange={changeHandler} required />
 
             <select name="condition" value={formData.condition} onChange={changeHandler}>
                 <option value="Okay">Okay</option>
@@ -73,11 +85,31 @@ function ListingForm({onSubmit, editingListing, clearEditing}) {
             </select>
 
             <select name="type" value={formData.type} onChange={changeHandler}>
-                <option name="sell">Sell</option>
-                <option name="lend">Lend</option>
+                <option value="sell">Sell</option>
+                <option value="lend">Lend</option>
             </select>
 
-            <input name="contactInfo" placeholder="Contact Info" value={formData.contactInfo} onChange={changeHandler} required></input>
+            <input name="contactInfo" placeholder="Contact Info" value={formData.contactInfo} onChange={changeHandler} required />
+
+            <label className="upload-button">
+                Upload Image
+
+                <input
+                    type="file"
+                    accept="image/*"
+                    placeholder="info@example.com"
+                    onChange={imageHandler}
+                    hidden
+                />
+            </label>
+
+            {formData.imageUrl && (
+                <img
+                    src={formData.imageUrl}
+                    alt="preview"
+                    style={{ width: "100%", marginTop:"10px", borderRadius: "10px"}}
+                />
+            )}
 
             <div className="form-buttons">
                 <button type="submit">{editingListing ? "Update" : "Create"}</button>
@@ -87,6 +119,6 @@ function ListingForm({onSubmit, editingListing, clearEditing}) {
             </div>
         </form>
     );
-}   
+}
 
 export default ListingForm;

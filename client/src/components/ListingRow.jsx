@@ -2,7 +2,7 @@ function ListingRow({ listing }) {
     return (
         <tr>
             <td>{listing.title}</td>
-            <td>{listing.price}</td>
+            <td>{listing.price} kr</td>
             <td>{listing.condition}</td>
             <td>{listing.type}</td>
             <td>{listing.universityId?.name || "Unknown"}</td>
