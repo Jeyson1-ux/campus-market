@@ -3,15 +3,15 @@ import axios from "axios";
 import ListingTable from './components/ListingTable';
 import ListingForm from './components/ListingForm';
 import "./App.css";
-import StatsBar from './components/Statsbar';
+import StatsBar from "./components/Statsbar.jsx";
+import ListingCards from './components/ListingCards';
 
 import hkrLogo from "./assets/universities/hkr.png";
 import lundLogo from "./assets/universities/lund.png";
 import mauLogo from "./assets/universities/mau.webp";
-import chalmersLogo from "./assets/universities/Chalmers.png";
+import chalmersLogo from "./assets/universities/chalmers.png";
 import kthLogo from "./assets/universities/KTH.webp";
-import UniversitySelector from './UniversitySelector';
-
+import UniversitySelector from "./components/UniversitySelector";
 const API_URL = "http://localhost:5000/api";
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
       setError("") // Om det lyckas så kan vi rensa alla tidigare fel
 
     } catch (err) {
-      setError("Failed to fecth listings")
+      setError("Failed to fetch listings")
     } finally {
       setLoading(false) // Vare sig det lyckas eller inte, sluta visa loading läget(att sidan laddas)
     }
@@ -83,7 +83,7 @@ function App() {
       fetchStats();
       setError(""); // rensa fel
     } catch (err) {
-      setError("Faile to save listing");
+      setError("Failed to save listing");
     }
   };
 
@@ -106,7 +106,7 @@ function App() {
     const matchesSearch = listing.title.toLowerCase().includes(search.toLowerCase()) // kollar om title matchar sökfältet
     const matchesUniversity = listing.universityId?.code === selectedUniversity; // annonsen tillhör till vilket lärosäte
 
-    return matchesSearch & matchesUniversity;
+    return matchesSearch && matchesUniversity;
   });
   
 
@@ -139,6 +139,13 @@ function App() {
       {/* Om error innehåller text visas detta */}
       {error && <p className='error-text'>{error}</p>}
 
+       {!loading && !error && (
+        <ListingCards 
+          listings={filteredListings}
+          onEdit={setEditingListing}
+          onDelete={handleDelete} 
+        />
+      )}
 
       {/* Loop thorugh all the listings if the site is no longer loading */}
       {!loading && !error && (
