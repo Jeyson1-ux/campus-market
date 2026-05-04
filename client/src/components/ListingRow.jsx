@@ -1,4 +1,4 @@
-function ListingRow({ listing }) {
+function ListingRow({ listing, onEdit, onDelete }) {
     return (
         <tr>
             <td>{listing.title}</td>
@@ -9,7 +9,7 @@ function ListingRow({ listing }) {
             <td>{listing.contactInfo}</td>
             <td>
                 <button onClick={() => onEdit(listing)}>Edit</button>
-                <button onClick={() => onDelete(listing)}>Delete</button>
+                <button onClick={() => onDelete(listing._id)}>Delete</button>
             </td>
         </tr>
     );
