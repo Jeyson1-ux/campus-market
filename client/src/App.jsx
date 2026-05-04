@@ -205,7 +205,7 @@ function App() {
       {!loading && !error && (
         <ListingTable 
           listings={filteredListings}
-          onEdit={setEditingListing}
+          onEdit={handleEdit}
           onDelete={handleDelete} 
         />
       )}
