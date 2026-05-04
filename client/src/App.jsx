@@ -13,7 +13,7 @@ import stockholmLogo from "./assets/universities/Stockholm.webp";
 import linkopingLogo from "./assets/universities/Linköpings.webp";
 import UniversitySelector from "./components/UniversitySelector";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 const DEFAULT_USER_ID = "69e89c3e4ed9badcbfa23f91";
 
 function App() {

@@ -96,7 +96,7 @@ export const updateListing = async (req, res) => {
         const updatedListing = await Listing.findByIdAndUpdate(
             req.params.id,
             req.body,
-            {new: true, runValidators: true} // Return the updated listing and run validators on the update
+            {returnDocument: "after", runValidators: true} // Return the updated listing and run validators on the update
         ); //runValidators = ensure that the updated data adheres to the schema's validation rules
 
         res.status(200).json(updatedListing); //201 = Created, 200 = OK

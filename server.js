@@ -22,7 +22,8 @@ app.get("/", (req, res) => {
 const startServer = async () => {
     try{
         await connectDB();
-        app.listen(process.env.PORT, () => {
+        const PORT = process.env.PORT || 5000;
+        app.listen(PORT, () => {
             console.log(`SERVER IS RUNNING ON PORT ${process.env.PORT}`);
        });
     } catch (err) {
