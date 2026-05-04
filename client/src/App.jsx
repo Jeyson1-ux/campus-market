@@ -3,7 +3,7 @@ import axios from "axios";
 import ListingTable from './components/ListingTable';
 import ListingForm from './components/ListingForm';
 import "./App.css";
-import StatsBar from "./components/Statsbar.jsx";
+import StatsBar from "./components/StatsBar.jsx";
 import ListingCards from './components/ListingCards';
 
 import hkrLogo from "./assets/universities/hkr.png";
