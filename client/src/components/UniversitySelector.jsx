@@ -9,8 +9,8 @@ function UniversitySelector({ universities, selectedUniversity, onSelectUniversi
             <div className="university-grid">
                 {universities.map((university) => (
                     <button
-                        key={university._id} // unik key fron
-                        className={selectedUniversity === university._id ? "university-card active" : "university-card"}
+                        key={university.id} // unik key fron
+                        className={selectedUniversity === university.code ? "university-card active" : "university-card"}
                         onClick={() => onSelectUniversity(university.code)}
                     >
                         <img src={university.logo} alt={university.name} />

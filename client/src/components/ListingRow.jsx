@@ -8,8 +8,10 @@ function ListingRow({ listing, onEdit, onDelete }) {
             <td>{listing.universityId?.name || "Unknown"}</td>
             <td>{listing.contactInfo}</td>
             <td>
-                <button onClick={() => onEdit(listing)}>Edit</button>
-                <button onClick={() => onDelete(listing._id)}>Delete</button>
+                <div className="the-actions">
+                    <button onClick={() => onEdit(listing)}>Edit</button>
+                    <button onClick={() => onDelete(listing._id)}>Delete</button>
+                </div>
             </td>
         </tr>
     );

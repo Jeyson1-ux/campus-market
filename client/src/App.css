@@ -363,6 +363,12 @@ td {
 td button {
   margin: 0.3rem 0;
   width: 100px;
+  margin-right: 0.6rem;
+}
+
+.the-actions {
+  display: flex;
+  gap: 0.6rem;
 }
 
 th {
